@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Evaluation Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .input-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .your-name-label,
+        .employee-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+        }
+
+        .your-name-input,
+        .employee-input {
+            width: 100%; /* Adjust the width as needed */
+            padding: 10px; /* Adjust the padding as needed */
+            margin: 10px 0; /* Adjust the margin as needed */
+            border: 1px solid #ccc; /* Adjust the border styles */
+            border-radius: 5px; /* Adjust the border-radius as needed */
+            font-size: 16px /* Adjust the font size as needed */
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 40px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e1e1e1;
+        }
+        
+       
+        nav {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 40px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e1e1e1;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            position: relative;
+        }
+        .input-container {
+        text-align: center;
+        margin-bottom: 20px;
+        }
+
+        /* Style for the input fields */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .submit-container {
+        text-align: center;
+        }
+
+        .your-name-label {
+            font-weight: bold; /* Make the label bold */
+            color: #333; /* Text color */
+            font-size: 18px; /* Font size */
+            margin-bottom: 10px; /* Spacing below the label */
+        }
+        
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+         }
+
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 21px;
+            border: 2px solid transparent;
+            opacity: 0;
+            pointer-events: none;
+            animation: glowing-border 2s infinite alternate;
+        }
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+            }
+        }
+        
+        
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-section h2 {
+            color: #333;
+            font-size: 24px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+
+        :root {
+            --glow-colors: #007bff, #00cc99, #ff9900; /* Add your desired colors here */
+        }
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px var(--glow-color);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px var(--glow-color);
+            }
+        }
+
+        .dropbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Add this CSS to your existing styles */
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+         }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+
+        }
+        .form-container {
+            text-align: left;
+        }
+        .question-container {
+        background-color: #f9f9f9;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        border: 1px solid #e1e1e1;
+        margin-bottom: 20px;
+        padding: 20px;
+          }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            flex: 70%;
+            font-weight: bold;
+        }
+
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .question label {
+            flex: 70%;
+            font-weight: bold;
+        }
+        
+        .rating-circles {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .rating-circles input[type="radio"] {
+            display: none;
+        }
+        
+        .rating-circles label {
+            width: 30px; /* Adjust the size as needed */
+            height: 30px; /* Adjust the size as needed */
+            border: 1px solid #000; /* Add your desired border styles */
+            border-radius: 50%; /* Makes the circle */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin-right: 10px; /* Adjust the spacing between circles */
+        }
+
+        .rating-circles input[type="radio"]:checked + label {
+            background-color: #000; /* Change the background color when selected */
+        }
+
+
+        /* Additional styling for the submit button */
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Additional styling for the submit button */
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .form-group {
+                flex-direction: column; /* Stack elements vertically on smaller screens */
+                align-items: flex-start; /* Align elements to the left */
+            }
+
+            .form-group label {
+                font-size: 14px; /* Reduce label font size for better spacing */
+                margin-bottom: 5px; /* Adjust margin between labels */
+            }
+
+            .form-group input[type="radio"] {
+                margin: 3px 0; /* Adjust margin around radio buttons */
+            }
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        /* Styling for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 1px solid #e1e1e1;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:hover {
+            background-color: #f2f2f2;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                background-color: rgba(255, 0, 0, 0.1); /* Red glowing color */
+            }
+            100% {
+                background-color: #f2f2f2;
+            }
+        }
+
+
+        /* Styling for list within the table */
+         ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+            line-height: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        ul li i {
+            margin-right: 5px;
+            color: #007bff;
+        }
+
+        
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+
+        
+    </style>
+
+
+</head>
+<body>
+        <nav>
+            <ul>
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="fas fa-bars"></i></button>
+                    <div class="dropdown-content">  
+                        <a href="/dashboard"><b>Dashboard</b></a>
+                        <a href="/dashboard/departments"><b>Department Management</b></a>
+                        <a href="/dashboard/positions"><b>Position Management</b></a>
+                        <a href="/dashboard/employees"><b>Employee Management</b></a>
+                        <a href="/dashboard/evaluations"><b>Evaluation Management</b></a>
+                        <a href="/dashboard/questionnaires"><b>Questionnaire Management</b></a>
+                        <a href="/results"><b>Results</b></a>
+                        <a href="/dashboard/logout"><b>Logout</b></a>
+                    </div>
+                </div>
+            </ul>
+        </nav>
+
+            
+    
+    <h1>Evaluation Form</h1>
+    <div class="form-container">
+        <form action="/submit_evaluation" method="post">
+            <div class="input-container">
+                <label class="your-name-label" for="evaluator_name">Your Name:</label>
+                <input type="text" id="evaluator_name" name="evaluator_name" class="your-name-input" required>
+            </div>
+
+    
+    
+            <div class="input-container">
+                <label class="employee-label" for="evaluated_name">Employee Being Evaluated:</label>
+                <input type="text" id="evaluated_name" name="evaluated_name" class="employee-input" required>
+            </div>
+    
+    
+
+            <div class="question-container">
+                <h2>Teamwork</h2>  
+                <div class="question">
+                    <label for="q1">1. Consistently works with others to accomplish goals and tasks:</label>
+                    <div class="rating-circles">    
+                        <input type="radio" name="q1" id="q1-1" value="1">
+                        <label for="q1-1">1</label>
+                
+                        <input type="radio" name="q1" id="q1-2" value="2">
+                        <label for="q1-2">2</label>
+                
+                        <input type="radio" name="q1" id="q1-3" value="3">
+                        <label for="q1-3">3</label>
+                
+                        <input type="radio" name="q1" id="q1-4" value="4"> 
+                        <label for="q1-4">4</label>
+                    </div>
+                </div> 
+
+            <div class="question">
+            <label for="q2">2. Treats all employee's in a respectful courteous manner:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q2" id="q2-1" value="1">
+                <label for="q2-1"></label>
+        
+                <input type="radio" name="q2" id="q2-2" value="2">
+                <label for="q2-2"></label>
+        
+                <input type="radio" name="q2" id="q2-3" value="3">  
+                <label for="q2-3"></label>
+        
+                <input type="radio" name="q2" id="q2-4" value="4">
+                <label for="q2-4"></label>
+            </div>
+        </div>
+        
+
+        <div class="question">
+            <label for="q3">3. Actively participates in activities and assigned tasks as required:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q3" id="q3-1" value="1">
+                <label for="q3-1"></label>
+        
+                <input type="radio" name="q3" id="q3-2" value="2">
+                <label for="q3-2"></label>
+        
+                <input type="radio" name="q3" id="q3-3" value="3">
+                <label for="q3-3"></label>
+        
+                <input type="radio" name="q3" id="q3-4" value="4">
+                <label for="q3-4"></label>
+            </div>
+        </div>
+        
+        <!-- Continue with Questions 4 to 43 -->
+        
+        <!-- Question 4 -->
+        <div class="question">
+            <label for="q4">4. Willingness to work with co-worker to improve department collaboration on a continuous basis:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q4" id="q4-1" value="1">
+                <label for="q4-1"></label>
+        
+                <input type="radio" name="q4" id="q4-2" value="2">
+                <label for="q4-2"></label>
+        
+                <input type="radio" name="q4" id="q4-3" value="3">
+                <label for="q4-3"></label>
+        
+                <input type="radio" name="q4" id="q4-4" value="4">
+                <label for="q4-4"></label>
+            </div>
+        </div>
+        
+        <!-- Continue with Questions 5 to 43 -->
+        
+        <!-- Question 5 -->
+        <div class="question">
+            <label for="q5">5. Considers the feedback and views of co-employees when completing an assigned task:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q5" id="q5-1" value="1">
+                <label for="q5-1"></label>
+        
+                <input type="radio" name="q5" id="q5-2" value="2">
+                <label for="q5-2"></label>
+        
+                <input type="radio" name="q5" id="q5-3" value="3">
+                <label for="q5-3"></label>
+        
+                <input type="radio" name="q5" id="q5-4" value="4">
+                <label for="q5-4"></label>
+            </div>
+        </div>
+   
+        <!-- Competency Category: Communication -->
+        <h2>Communication</h2>
+        <div class="question">
+            <label for="q6">1. Actively listens to supervisor/manager and/or co-workers:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q6" id="q6-1" value="1">
+                <label for="q6-1">1</label>
+        
+                <input type="radio" name="q6" id="q6-2" value="2">
+                <label for="q6-2">2</label>
+        
+                <input type="radio" name="q6" id="q6-3" value="3">
+                <label for="q6-3">3</label>
+        
+                <input type="radio" name="q6" id="q6-4" value="4">
+                <label for="q6-4">4</label>
+            </div>
+        </div>
+
+        <div class="question">
+            <label for="q7">7. Comprehends written and oral information:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q7" id="q7-1" value="1">
+                <label for="q7-1"></label>
+        
+                <input type="radio" name="q7" id="q7-2" value="2">
+                <label for="q7-2"></label>
+        
+                <input type="radio" name="q7" id="q7-3" value="3">
+                <label for="q7-3"></label>
+        
+                <input type="radio" name="q7" id="q7-4" value="4">
+                <label for="q7-4"></label>
+            </div>
+        </div>
+        
+        <!-- Continue with Questions 8 to 44 -->
+        
+        <!-- Question 8 -->
+        <div class="question">
+            <label for="q8">8. Consistently delivers accurate information both written and orally:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q8" id="q8-1" value="1">
+                <label for="q8-1"></label>
+        
+                <input type="radio" name="q8" id="q8-2" value="2">
+                <label for="q8-2"></label>
+        
+                <input type="radio" name="q8" id="q8-3" value="3">
+                <label for="q8-3"></label>
+        
+                <input type="radio" name="q8" id="q8-4" value="4">
+                <label for="q8-4"></label>
+            </div>
+        </div>
+        
+        <!-- Continue with Questions 9 to 44 -->
+        
+        <!-- Question 9 -->
+        <div class="question">
+            <label for="q9">9. Reliably provides feedback as required, both internally and externally:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q9" id="q9-1" value="1">
+                <label for="q9-1"></label>
+        
+                <input type="radio" name="q9" id="q9-2" value="2">
+                <label for="q9-2"></label>
+        
+                <input type="radio" name="q9" id="q9-3" value="3">
+                <label for="q9-3"></label>
+        
+                <input type="radio" name="q9" id="q9-4" value="4">
+                <label for="q9-4"></label>
+            </div>
+        </div>
+        
+        <!-- Continue with Questions 10 to 44 -->
+        
+        <!-- Question 10 -->
+        <div class="question">
+            <label for="q10">10. Able to communicate well with internal and external customers:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q10" id="q10-1" value="1">
+                <label for="q10-1"></label>
+        
+                <input type="radio" name="q10" id="q10-2" value="2">
+                <label for="q10-2"></label>
+        
+                <input type="radio" name="q10" id="q10-3" value="3">
+                <label for="q10-3"></label>
+        
+                <input type="radio" name="q10" id="q10-4" value="4">
+                <label for="q10-4"></label>
+            </div>
+        </div>
+
+        <!-- Competency Category: Attendance & Punctuality -->
+        <h2>Attendance & Punctuality</h2>
+        <div class="question">
+            <label for="q11">11. Is punctual on a regular basis:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q11" id="q11-1" value="1">
+                <label for="q11-1">1</label>
+        
+                <input type="radio" name="q11" id="q11-2" value="2">
+                <label for="q11-2">2</label>
+        
+                <input type="radio" name="q11" id="q11-3" value="3">
+                <label for="q11-3">3</label>
+        
+                <input type="radio" name="q11" id="q11-4" value="4">
+                <label for="q11-4">4</label>
+            </div>
+        </div>
+
+            <!-- Question 12 -->
+        <div class="question">
+            <label for="q12">12. Maintains good attendance:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q12" id="q12-1" value="1">
+                <label for="q12-1"></label>
+
+                <input type="radio" name="q12" id="q12-2" value="2">
+                <label for="q12-2"></label>
+
+                <input type="radio" name="q12" id="q12-3" value="3">
+                <label for="q12-3"></label>
+
+                <input type="radio" name="q12" id="q12-4" value="4">
+                <label for="q12-4"></label>
+            </div>
+        </div>
+
+        <!-- Continue with Questions 13 to 44 -->
+
+        <!-- Question 13 -->
+        <div class="question">
+            <label for="q13">13. Informs supervisor in a timely manner when absenteeism and lateness may occur:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q13" id="q13-1" value="1">
+                <label for="q13-1"></label>
+
+                <input type="radio" name="q13" id="q13-2" value="2">
+                <label for="q13-2"></label>
+
+                <input type="radio" name="q13" id="q13-3" value="3">
+                <label for="q13-3"></label>
+
+                <input type="radio" name="q13" id="q13-4" value="4">
+                <label for="q13-4"></label>
+            </div>
+        </div>
+        
+                <!-- Competency Category: Productivity/Resilience -->
+        <h2>Productivity/Resilience</h2>
+        <div class="question">
+            <label for="q14">14. Consistently delivers quality results:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q14" id="q14-1" value="1">
+                <label for="q14-1">1</label>
+
+                <input type="radio" name="q14" id="q14-2" value="2">
+                <label for="q14-2">2</label>
+
+                <input type="radio" name="q14" id="q14-3" value="3">
+                <label for="q14-3">3</label>
+
+                <input type="radio" name="q14" id="q14-4" value="4">
+                <label for="q14-4">4</label>
+            </div>
+        </div>
+
+        <!-- Question 15 -->
+        <div class="question">
+            <label for="q15">15. Ability to meet deadlines and manages time well:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q15" id="q15-1" value="1">
+                <label for="q15-1"></label>
+
+                <input type="radio" name="q15" id="q15-2" value="2">
+                <label for="q15-2"></label>
+
+                <input type="radio" name="q15" id="q15-3" value="3">
+                <label for="q15-3"></label>
+
+                <input type="radio" name="q15" id="q15-4" value="4">
+                <label for="q15-4"></label>
+            </div>
+        </div>
+
+        <!-- Question 16 -->
+        <div class="question">
+            <label for="q16">16. Ability to multitask:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q16" id="q16-1" value="1">
+                <label for="q16-1"></label>
+
+                <input type="radio" name="q16" id="q16-2" value="2">
+                <label for="q16-2"></label>
+
+                <input type="radio" name="q16" id="q16-3" value="3">
+                <label for="q16-3"></label>
+
+                <input type="radio" name="q16" id="q16-4" value="4">
+                <label for="q16-4"></label>
+            </div>
+        </div>
+
+        <!-- Question 17 -->
+        <div class="question">
+            <label for="q17">17. Ability to work around problems and obstacles in a stressful situation in order to achieve the required task:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q17" id="q17-1" value="1">
+                <label for="q17-1"></label>
+
+                <input type="radio" name="q17" id="q17-2" value="2">
+                <label for="q17-2"></label>
+
+                <input type="radio" name="q17" id="q17-3" value="3">
+                <label for="q17-3"></label>
+
+                <input type="radio" name="q17" id="q17-4" value="4">
+                <label for="q17-4"></label>
+            </div>
+        </div>
+
+        <!-- Question 18 -->
+        <div class="question">
+            <label for="q18">18. Time management is effective and efficient:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q18" id="q18-1" value="1">
+                <label for="q18-1"></label>
+
+                <input type="radio" name="q18" id="q18-2" value="2">
+                <label for="q18-2"></label>
+
+                <input type="radio" name="q18" id="q18-3" value="3">
+                <label for="q18-3"></label>
+
+                <input type="radio" name="q18" id="q18-4" value="4">
+                <label for="q18-4"></label>
+            </div>
+        </div>
+
+        <!-- Question 19 -->
+        <div class="question">
+            <label for="q19">19. Efficiently informs supervisor/manager of any challenges or barriers relevant to a given task or assignment:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q19" id="q19-1" value="1">
+                <label for="q19-1"></label>
+
+                <input type="radio" name="q19" id="q19-2" value="2">
+                <label for="q19-2"></label>
+
+                <input type="radio" name="q19" id="q19-3" value="3">
+                <label for="q19-3"></label>
+
+                <input type="radio" name="q19" id="q19-4" value="4">
+                <label for="q19-4"></label>
+            </div>
+        </div>
+
+        <!-- Competency Category: Initiative/Proactivity -->
+        <h2>Initiative/Proactivity</h2>
+        <div class="question">
+            <label for="q20">20. Ability to complete assignments without the need for prompting from supervisors/managers and/or others:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q20" id="q20-1" value="1">
+                <label for="q20-1">1</label>
+        
+                <input type="radio" name="q20" id="q20-2" value="2">
+                <label for="q20-2">2</label>
+        
+                <input type="radio" name="q20" id="q20-3" value="3">
+                <label for="q20-3">3</label>
+        
+                <input type="radio" name="q20" id="q20-4" value="4">
+                <label for="q20-4">4</label>
+            </div>
+        </div>
+        
+        <!-- Question 21 -->
+        <div class="question">
+            <label for="q21">21. Successfully completes tasks independently and consistently:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q21" id="q21-1" value="1">
+                <label for="q21-1"></label>
+        
+                <input type="radio" name="q21" id="q21-2" value="2">
+                <label for="q21-2"></label>
+        
+                <input type="radio" name="q21" id="q21-3" value="3">
+                <label for="q21-3"></label>
+        
+                <input type="radio" name="q21" id="q21-4" value="4">
+                <label for="q21-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 22 -->
+        <div class="question">
+            <label for="q22">22. Seeks additional support when necessary:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q22" id="q22-1" value="1">
+                <label for="q22-1"></label>
+        
+                <input type="radio" name="q22" id="q22-2" value="2">
+                <label for="q22-2"></label>
+        
+                <input type="radio" name="q22" id="q22-3" value="3">
+                <label for="q22-3"></label>
+        
+                <input type="radio" name="q22" id="q22-4" value="4">
+                <label for="q22-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 23 -->
+        <div class="question">
+            <label for="q23">23. Recognizes and takes appropriate action to effectively address problems and opportunities:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q23" id="q23-1" value="1">
+                <label for="q23-1"></label>
+        
+                <input type="radio" name="q23" id="q23-2" value="2">
+                <label for="q23-2"></label>
+        
+                <input type="radio" name="q23" id="q23-3" value="3">
+                <label for="q23-3"></label>
+        
+                <input type="radio" name="q23" id="q23-4" value="4">
+                <label for="q23-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 24 -->
+        <div class="question">
+            <label for="q24">24. Engages in continuous learning and improvement:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q24" id="q24-1" value="1">
+                <label for="q24-1"></label>
+        
+                <input type="radio" name="q24" id="q24-2" value="2">
+                <label for="q24-2"></label>
+        
+                <input type="radio" name="q24" id="q24-3" value="3">
+                <label for="q24-3"></label>
+        
+                <input type="radio" name="q24" id="q24-4" value="4">
+                <label for="q24-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 25 -->
+        <div class="question">
+            <label for="q25">25. Contributes new ideas and always seeks ways to improve the department/organization:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q25" id="q25-1" value="1">
+                <label for="q25-1"></label>
+        
+                <input type="radio" name="q25" id="q25-2" value="2">
+                <label for="q25-2"></label>
+        
+                <input type="radio" name="q25" id="q25-3" value="3">
+                <label for="q25-3"></label>
+        
+                <input type="radio" name="q25" id="q25-4" value="4">
+                <label for="q25-4"></label>
+            </div>
+        </div>
+
+        <!-- Competency Category: Judgment/Decision Making -->
+        <h2>Judgment/Decision Making</h2>
+        <div class="question">
+            <label for="q26">26. Analyzes problems effectively:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q26" id="q26-1" value="1">
+                <label for="q26-1">1</label>
+        
+                <input type="radio" name="q26" id="q26-2" value="2">
+                <label for="q26-2">2</label>
+        
+                <input type="radio" name="q26" id="q26-3" value="3">
+                <label for="q26-3">3</label>
+        
+                <input type="radio" name="q26" id="q26-4" value="4">
+                <label for="q26-4">4</label>
+            </div>
+        </div>
+        
+        <!-- Question 27 -->
+        <div class="question">
+            <label for="q27">27. Demonstrates the ability to make creative and effective solutions to problems:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q27" id="q27-1" value="1">
+                <label for="q27-1"></label>
+        
+                <input type="radio" name="q27" id="q27-2" value="2">
+                <label for="q27-2"></label>
+        
+                <input type="radio" name="q27" id="q27-3" value="3">
+                <label for="q27-3"></label>
+        
+                <input type="radio" name="q27" id="q27-4" value="4">
+                <label for="q27-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 28 -->
+        <div class="question">
+            <label for="q28">28. Demonstrates good judgment in handling routine problems:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q28" id="q28-1" value="1">
+                <label for="q28-1"></label>
+        
+                <input type="radio" name="q28" id="q28-2" value="2">
+                <label for="q28-2"></label>
+        
+                <input type="radio" name="q28" id="q28-3" value="3">
+                <label for="q28-3"></label>
+        
+                <input type="radio" name="q28" id="q28-4" value="4">
+                <label for="q28-4"></label>
+            </div>
+        </div>
+
+        <!-- Competency Category: Dependability/Reliability -->
+        <h2>Dependability/Reliability</h2>
+        <div class="question">
+            <label for="q29">29. Ability to follow through and meet required deadlines:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q29" id="q29-1" value="1">
+                <label for="q29-1">1</label>
+        
+                <input type="radio" name="q29" id="q29-2" value="2">
+                <label for="q29-2">2</label>
+        
+                <input type="radio" name="q29" id="q29-3" value="3">
+                <label for="q29-3">3</label>
+        
+                <input type="radio" name="q29" id="q29-4" value="4">
+                <label for="q29-4">4</label>
+            </div>
+        </div>
+        
+        <!-- Question 30 -->
+        <div class="question">
+            <label for="q30">30. Is personally accountable for his/her actions:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q30" id="q30-1" value="1">
+                <label for="q30-1"></label>
+        
+                <input type="radio" name="q30" id="q30-2" value="2">
+                <label for="q30-2"></label>
+        
+                <input type="radio" name="q30" id="q30-3" value="3">
+                <label for="q30-3"></label>
+        
+                <input type="radio" name="q30" id="q30-4" value="4">
+                <label for="q30-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 31 -->
+        <div class="question">
+            <label for="q31">31. Adapts effectively to changes in the work environment:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q31" id="q31-1" value="1">
+                <label for="q31-1"></label>
+        
+                <input type="radio" name="q31" id="q31-2" value="2">
+                <label for="q31-2"></label>
+        
+                <input type="radio" name="q31" id="q31-3" value="3">
+                <label for="q31-3"></label>
+        
+                <input type="radio" name="q31" id="q31-4" value="4">
+                <label for="q31-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 32 -->
+        <div class="question">
+            <label for="q32">32. Displays a consistent level of high performance:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q32" id="q32-1" value="1">
+                <label for="q32-1"></label>
+        
+                <input type="radio" name="q32" id="q32-2" value="2">
+                <label for="q32-2"></label>
+        
+                <input type="radio" name="q32" id="q32-3" value="3">
+                <label for="q32-3"></label>
+        
+                <input type="radio" name="q32" id="q32-4" value="4">
+                <label for="q32-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 33 -->
+        <div class="question">
+            <label for="q33">33. Is honest in all his/her dealings:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q33" id="q33-1" value="1">
+                <label for="q33-1"></label>
+        
+                <input type="radio" name="q33" id="q33-2" value="2">
+                <label for="q33-2"></label>
+        
+                <input type="radio" name="q33" id="q33-3" value="3">
+                <label for="q33-3"></label>
+        
+                <input type="radio" name="q33" id="q33-4" value="4">
+                <label for="q33-4"></label>
+            </div>
+        </div>
+
+        <!-- Competency Category: Attitude -->
+        <h2>Attitude</h2>
+        <div class="question">
+            <label for="q34">34. Offers assistance willingly:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q34" id="q34-1" value="1">
+                <label for="q34-1">1</label>
+        
+                <input type="radio" name="q34" id="q34-2" value="2">
+                <label for="q34-2">2</label>
+        
+                <input type="radio" name="q34" id="q34-3" value="3">
+                <label for="q34-3">3</label>
+        
+                <input type="radio" name="q34" id="q34-4" value="4">
+                <label for="q34-4">4</label>
+            </div>
+        </div>
+        
+        <!-- Question 35 (Attitude) -->
+        <div class="question">
+            <label for="q35">35. Makes a positive contribution to morale:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q35" id="q35-1" value="1">
+                <label for="q35-1"></label>
+        
+                <input type="radio" name="q35" id="q35-2" value="2">
+                <label for="q35-2"></label>
+        
+                <input type="radio" name="q35" id="q35-3" value="3">
+                <label for="q35-3"></label>
+        
+                <input type="radio" name="q35" id="q35-4" value="4">
+                <label for="q35-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 36 (Attitude) -->
+        <div class="question">
+            <label for="q36">36. Shows sensitivity to and consideration for others' feelings:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q36" id="q36-1" value="1">
+                <label for="q36-1"></label>
+        
+                <input type="radio" name="q36" id="q36-2" value="2">
+                <label for="q36-2"></label>
+        
+                <input type="radio" name="q36" id="q36-3" value="3">
+                <label for="q36-3"></label>
+        
+                <input type="radio" name="q36" id="q36-4" value="4">
+                <label for="q36-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 37 (Attitude) -->
+        <div class="question">
+            <label for="q37">37. Accepts constructive criticism positively:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q37" id="q37-1" value="1">
+                <label for="q37-1"></label>
+        
+                <input type="radio" name="q37" id="q37-2" value="2">
+                <label for="q37-2"></label>
+        
+                <input type="radio" name="q37" id="q37-3" value="3">
+                <label for="q37-3"></label>
+        
+                <input type="radio" name="q37" id="q37-4" value="4">
+                <label for="q37-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 38 (Attitude) -->
+        <div class="question">
+            <label for="q38">38. Shows pride in work:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q38" id="q38-1" value="1">
+                <label for="q38-1"></label>
+        
+                <input type="radio" name="q38" id="q38-2" value="2">
+                <label for="q38-2"></label>
+        
+                <input type="radio" name="q38" id="q38-3" value="3">
+                <label for="q38-3"></label>
+        
+                <input type="radio" name="q38" id="q38-4" value="4">
+                <label for="q38-4"></label>
+            </div>
+        </div>
+
+        <!-- Competency Category: Professionalism -->
+        <h2>Professionalism</h2>
+        <div class="question">
+            <label for="q39">39. Respects those in authority:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q39" id="q39-1" value="1">
+                <label for="q39-1">1</label>
+        
+                <input type="radio" name="q39" id="q39-2" value="2">
+                <label for="q39-2">2</label>
+        
+                <input type="radio" name="q39" id="q39-3" value="3">
+                <label for="q39-3">3</label>
+        
+                <input type="radio" name="q39" id="q39-4" value="4">
+                <label for="q39-4">4</label>
+            </div>
+        </div>
+        
+        <!-- Question 40 (Professionalism) -->
+        <div class="question">
+            <label for="q40">40. Behaves in a professional manner:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q40" id="q40-1" value="1">
+                <label for="q40-1"></label>
+        
+                <input type="radio" name="q40" id="q40-2" value="2">
+                <label for="q40-2"></label>
+        
+                <input type="radio" name="q40" id="q40-3" value="3">
+                <label for="q40-3"></label>
+        
+                <input type="radio" name="q40" id="q40-4" value="4">
+                <label for="q40-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 41 (Professionalism) -->
+        <div class="question">
+            <label for="q41">41. Wise in the choice of words when communicating (respectful, courteous, does not use profane language, etc.):</label>
+            <div class="rating-circles">
+                <input type="radio" name="q41" id="q41-1" value="1">
+                <label for="q41-1"></label>
+        
+                <input type="radio" name="q41" id="q41-2" value="2">
+                <label for="q41-2"></label>
+        
+                <input type="radio" name="q41" id="q41-3" value="3">
+                <label for="q41-3"></label>
+        
+                <input type="radio" name="q41" id="q41-4" value="4">
+                <label for="q41-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 42 (Professionalism) -->
+        <div class="question">
+            <label for="q42">42. Demonstrates professionalism in appearance and attire:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q42" id="q42-1" value="1">
+                <label for="q42-1"></label>
+        
+                <input type="radio" name="q42" id="q42-2" value="2">
+                <label for="q42-2"></label>
+        
+                <input type="radio" name="q42" id="q42-3" value="3">
+                <label for="q42-3"></label>
+        
+                <input type="radio" name="q42" id="q42-4" value="4">
+                <label for="q42-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 43 (Professionalism) -->
+        <div class="question">
+            <label for="q43">43. Acts as a role model for others:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q43" id="q43-1" value="1">
+                <label for="q43-1"></label>
+        
+                <input type="radio" name="q43" id="q43-2" value="2">
+                <label for="q43-2"></label>
+        
+                <input type="radio" name="q43" id="q43-3" value="3">
+                <label for="q43-3"></label>
+        
+                <input type="radio" name="q43" id="q43-4" value="4">
+                <label for="q43-4"></label>
+            </div>
+        </div>
+        
+        <!-- Question 44 (Professionalism) -->
+        <div class="question">
+            <label for="q44">44. Maintains confidentiality of sensitive information:</label>
+            <div class="rating-circles">
+                <input type="radio" name="q44" id="q44-1" value="1">
+                <label for="q44-1"></label>
+        
+                <input type="radio" name="q44" id="q44-2" value="2">
+                <label for="q44-2"></label>
+        
+                <input type="radio" name="q44" id="q44-3" value="3">
+                <label for="q44-3"></label>
+        
+                <input type="radio" name="q44" id="q44-4" value="4">
+                <label for="q44-4"></label>
+            </div>
+        </div>
+
+        <div class="submit-container">
+        <input type="submit" value="Submit Evaluation">
+    </form>
+</body>
+</html>

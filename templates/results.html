@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <title>Evaluation Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 40px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e1e1e1;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            position: relative;
+        }
+
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 21px;
+            border: 2px solid transparent;
+            opacity: 0;
+            pointer-events: none;
+            animation: glowing-border 2s infinite alternate;
+        }
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+            }
+        }
+
+        .dashboard-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(179, 170, 170, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-section h2 {
+            color: #333;
+            font-size: 24px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        :root {
+            --glow-colors: #007bff, #00cc99, #ff9900;
+        }
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px var(--glow-color);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px var(--glow-color);
+            }
+        }
+
+        .dropbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 8px 16px; /* Reduced padding */
+            font-size: 14px; /* Reduced font size */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 8px 12px; /* Reduced padding */
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        /* Styling for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px; /* Reduced margin */
+            border: 1px solid #e1e1e1;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reduced box-shadow */
+            border-radius: 5px; /* Reduced border-radius */
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px); /* Reduced translateY */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 6px; /* Reduced padding */
+            text-align: left;
+            font-size: 12px; /* Reduced font size */
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:hover {
+            background-color: #f2f2f2;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                background-color: rgba(255, 0, 0, 0.1);
+            }
+            100% {
+                background-color: #f2f2f2;
+            }
+        }
+
+        /* Styling for list within the table */
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .evaluator-header {
+            background-color: #f2f2f2; /* Background color for the header */
+            font-weight: bold;
+            color: #FF5733; /* Your desired text color */
+        }
+        
+        ul li {
+            margin-bottom: 4px;
+            color: #333;
+            font-size: 10px; /* Reduced font size */
+            line-height: 14px; /* Reduced line height */
+            display: flex;
+            align-items: center;
+        }
+
+        ul li i {
+            margin-right: 5px;
+            color: #007bff;
+        }
+
+        /* Styling for the dashboard container on hover */
+        .dashboard-container:hover {
+            transform: translateY(-3px); /* Slightly reduced translateY */
+            box-shadow: 0 6px 12px rgba(179, 170, 170, 0.2); /* Reduced box-shadow */
+            animation: floatUp 0.3s ease-in-out, glowing 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-3px); /* Slightly reduced translateY */
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .dog-animation {
+            position: fixed;
+            top: 0;
+            left: -150px;
+            animation: run 5s linear infinite;
+        }
+
+        @keyframes run {
+            0% {
+                transform: translateX(-150px) scaleX(1);
+            }
+            50% {
+                transform: translateX(calc(100vw + 150px)) scaleX(-1);
+            }
+            100% {
+                transform: translateX(-150px) scaleX(1);
+            }
+        }
+
+        button i.fas.fa-trash {
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        button:hover i.fas.fa-trash {
+            transform: scale(1.2);
+        }
+
+        
+
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-bars"></i></button>
+                <div class="dropdown-content">  
+                    <a href="/dashboard"><b>Dashboard</b></a>
+                    <a href="/dashboard/departments"><b>Department Management</b></a>
+                    <a href="/dashboard/positions"><b>Position Management</b></a>
+                    <a href="/dashboard/employees"><b>Employee Management</b></a>
+                    <a href="/dashboard/evaluations"><b>Evaluation Management</b></a>
+                    <a href="/dashboard/questionnaires"><b>Questionnaire Management</b></a>
+                    <a href="/results"><b>Results</b></a>
+                    <a href="/dashboard/logout"><b>Logout</b></a>
+                </div>
+            </div>
+        </ul>
+    </nav>
+
+    
+
+    <h1>Evaluation Results</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Evaluator Name</th>
+                <th>Evaluated Name</th>
+                <th>Teamwork (20)</th>
+                <th>Communication (20)</th>
+                <th>Attendance (12)</th>
+                <th>Productivity/Resilience (24)</th>
+                <th>Initiative/Proactivity (24)</th>
+                <th>Judgment/Decision Making (12)</th>
+                <th>Dependability/Reliability (20)</th>
+                <th>Attitude (20)</th>
+                <th>Professionalism (24)</th>
+                <th>Overall </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evaluation in evaluation_data %}
+            <tr>
+                <td>{{ evaluation.id }}</td>
+                <td>{{ evaluation.evaluator_name }}</td>
+                <td>{{ evaluation.evaluated_name }}</td>
+                <td>{{ evaluation.teamwork_total }}</td>
+                <td>{{ evaluation.communication_total }}</td>
+                <td>{{ evaluation.attendance_total }}</td>
+                <td>{{ evaluation.productivity_total }}</td>
+                <td>{{ evaluation.initiative_total }}</td>
+                <td>{{ evaluation.judgment_total }}</td>
+                <td>{{ evaluation.dependability_total }}</td>
+                <td>{{ evaluation.attitude_total }}</td>
+                <td>{{ evaluation.professionalism_total }}</td>
+                <td>{{ evaluation.overall_total }}</td>
+                <td>
+                    <form method="POST" action="/delete_evaluation/{{ evaluation.id }}">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this evaluation?');">
+                             <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <script>
+        function deleteRow(button) {
+            // Function to delete the row when the delete button is clicked
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+</body>
+</html>
