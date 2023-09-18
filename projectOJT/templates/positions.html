@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        .margin-container {
+            margin: 0 auto; /* Center the container */
+            width: 60%; /* Set the width of the container */
+        }
+
+        .position-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .position-form input[type="text"] {
+            width: 100%; /* Adjust the width */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+            z-index: 1000; /* Ensures that the navbar stays on top of other elements */
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .dashboard-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 15vh;
+            padding: 20px; /* Add padding for spacing */
+            box-sizing: border-box; /* Ensure padding is included in width calculations */
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 11px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0; /* Initial opacity set to 0 */
+            transform: translateY(20px); /* Slide down effect */
+            animation: fadeInUp 0.5s forwards;
+            transition: box-shadow 0.3s, transform 0.3s;
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .error-message {
+        color: #ff0000; /* Set the desired font color (red in this case) */
+        margin-top: 10px;
+        text-align: center;
+         }
+
+
+        .dashboard-container::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;          
+            border-radius: 12px;
+            border: 6px solid var(--glow-color, transparent); /* Default color or custom property */
+            opacity: 0;
+            pointer-events: none;
+            animation: glowing-border 2s infinite alternate;
+        }
+
+        :root {
+            --glow-colors: #007bff, #00cc99, #ff9900; /* Add your desired colors here */
+        }
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px var(--glow-color, rgba(0, 123, 255, 0.4));
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px var(--glow-color, rgba(0, 123, 255, 0.8));
+            }
+        }
+        
+        .dashboard-container:hover {
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adjust box shadow as desired */
+                transform: scale(1.02);
+            }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-section h2 {                    
+            color: #333;
+            font-size: 24px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .dropbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .action-button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-button-container > div {
+            margin-right: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-input {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .input-wrapper {
+            position: relative;
+            width: 100%;
+            
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-input{
+            position: relative ;
+            display: inline-block;  
+             width: 100%;
+        }
+
+        .dropdown-input input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px; 
+        }
+
+        .dropdown-input .dropbtn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 90%;
+            width: 30px;
+            background-color: #04AA6D;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            font-size: 16px;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+            
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        .dropdown-input .dropbtn:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #04AA6D; /* Add focus border */
+        }
+
+        .position-form {
+            margin-bottom: 30px;
+            opacity: 0; /* Initial opacity set to 0 */
+            transform: translateY(10px); /* Slide up effect */
+            animation: fadeInUp 0.5s forwards;
+            transition: transform 0.3s;
+        }
+
+        .position-form:hover {
+                transform: translateY(-2px);
+                transform: scale(1.02);
+        }
+
+        .position-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+             align-items: center;
+        }
+
+        .form-group label {
+            flex: 0 0 auto; /* Prevent label from growing */
+            width: 150px; /* Set a fixed width for the label */
+            text-align: right; /* Align label text to the right */
+            margin-right: 10px; /* Add some right margin for spacing */
+        }
+
+        .department-list {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        max-height: 70px; /* Adjust the maximum height as needed */
+        overflow-y: auto; /* Add vertical scrollbars when the content exceeds the maximum height */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        z-index: 2;
+        }
+
+        .department-list a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+
+        .department-list a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown-input.active .department-list {
+            display: block;
+        }
+
+        .position-form label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .position-form input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .position-form .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px; /* Adjust padding for a modern button size */
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: block;
+            margin: 0 auto; /* Center the button horizontally */
+            margin-top: 20px; /* Add some top margin for spacing */
+        }
+
+        .position-form .btn-primary:hover {
+            background-color: #0056b3;
+        }   
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.5s forwards;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        td {
+            border-bottom: none;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .action-link {
+            font-size: 18px;
+            color: #007bff;
+            margin: 0 4px;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: inline-block;
+            padding: 2px 6px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .action-links {
+            font-size: 18px;
+            color: #007bff;
+            margin: 0 5px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .action-link:hover {
+            color: #0056b3;
+        }
+
+        .edit-link {
+            color: #ffc107;
+        }
+
+        .delete-link {
+            color: #dc3545;
+        }
+            
+        
+
+    </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const glowColors = ["#007bff", "#00cc99", "#ff9900"]; // Add your desired colors here
+                const dashboardContainer = document.querySelector(".dashboard-container");
+
+                function setRandomGlowColor() {
+                    const randomIndex = Math.floor(Math.random() * glowColors.length);
+                    const randomColor = glowColors[randomIndex];
+                    dashboardContainer.style.setProperty("--glow-color", randomColor);
+                }
+
+                setRandomGlowColor(); // Set a random color initially
+
+                dashboardContainer.addEventListener("animationiteration", setRandomGlowColor);
+            });
+        </script>
+        <script>
+            function toggleEditFields(rowId) {
+                const editFields = document.querySelectorAll(`.edit-fields-${rowId}`);
+                const displayValue = editFields[0].style.display === 'none' ? 'table-cell' : 'none';
+        
+                for (const field of editFields) {
+                    field.style.display = displayValue;
+                }
+            }
+        </script>
+
+        <script>
+            function toggleEditFields(rowId) {
+                const editForm = document.getElementById(`edit-form-${rowId}`);
+                editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+            }
+        </script>
+    
+</head>
+<body>
+    <nav>
+        <ul>
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-bars"></i></button>
+                <div class="dropdown-content">  
+                    <a href="/dashboard"><b>Dashboard</b></a>
+                    <a href="/dashboard/positions"><b>Employee Management</b></a>
+                    <a href="/dashboard/departments"><b>Department Management</b></a>
+                    <a href="/dashboard/questionnaires"><b>Behavioral Competency</b></a>
+                    <a href="/dashboard/performance_evaluation"><b>Performance Evaluation</b></a>
+                    <a href="/results"><b>Results</b></a>
+                    <a href="/logout"><b>Logout</b></a>
+                </div>
+        </ul>
+    </nav>
+
+    <div class="dashboard-wrapper"></div>
+    <div class="dashboard-container">
+        
+        <h1>Employee Management</h1>
+
+        <div class="margin-container"> <!-- New container for adjusted margins -->
+            <form method="POST" action="/addposition?department_id={{ department_id }}" class="position-form">
+                <div class="form-group">
+                    <label for="en">Employee Name:</label>
+                    <input type="text" id="en" name="en" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ep">Employee Position:</label>
+                    <input type="text" id="ep" name="ep" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ed">Employee Department:</label>
+                    <div class="dropdown-input">
+                        <div class="input-wrapper">
+                            <div class="input-container">
+                                <input type="text" id="ed" name="ed" class="form-control" placeholder="Select a department" required>
+                                <button class="dropbtn" id="department-dropbtn">&#9660;</button>
+                            </div>
+                            <div class="department-list" id="department-dropdown">
+                                <!-- List of departments -->
+                                <a class="department-option">Accounting</a>
+                                <a class="department-option">Credits and Collection</a>
+                                <a class="department-option">Logistics</a>
+                                <a class="department-option">Operations</a>
+                                <a class="department-option">Procurement</a>
+                                <a class="department-option">Sales</a>
+                                <a class="department-option">Technical</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    const departmentDropdown = document.getElementById("department-dropdown");
+                    const departmentDropbtn = document.getElementById("department-dropbtn");
+                    const departmentInput = document.getElementById("ed");
+            
+                    departmentDropbtn.addEventListener("click", function() {
+                        if (departmentDropdown.style.display === "block") {
+                            departmentDropdown.style.display = "none";
+                        } else {
+                            departmentDropdown.style.display = "block";
+                        }
+                    });
+            
+                    document.addEventListener("click", function(event) {
+                        if (!event.target.matches("#department-dropbtn") && !event.target.matches("#ed")) {
+                            departmentDropdown.style.display = "none";
+                        }
+                    });
+            
+                    // Handle department selection
+                    const departmentOptions = document.querySelectorAll(".department-option");
+                    departmentOptions.forEach(option => {
+                        option.addEventListener("click", function() {
+                            departmentInput.value = option.textContent;
+                            departmentDropdown.style.display = "none";
+                        });
+                    });
+                </script>
+
+                <div class="form-group">
+                    <input type="submit" value="Add Position" class="btn btn-primary">
+                </div>
+            </form>
+            {% if error %}
+            <div class="error-message">
+                <p>{{ error }}</p>
+            </div>
+            {% endif %}
+        </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Employee Position</th>
+                    <th>Employee Department</th>
+                    <th colspan="2">Delete / Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in product %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                    <td class="action-links">
+                        <div class="action-button-container">
+                            <div id="edit-form-{{ row[0] }}" style="display: none;">
+                                <form action="/updateposition" method="POST">
+                                    <input type="hidden" name="id" value="{{ row[0] }}">
+                                    <input type="text" name="en" value="{{ row[1] }}" class="form-control">
+                                    <input type="text" name="ep" value="{{ row[2] }}" class="form-control">
+                                    <input type="text" name="ed" value="{{ row[3] }}" class="form-control">
+                                    <button type="submit" class="action-link"><i class="fas fa-check"></i></button>
+                                </form>
+                            </div>
+                            <div>
+                                <a href="/deleteposition/{{ row[0] }}" class="action-link"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                            <div>
+                                <a href="#" class="action-link" onclick="toggleEditFields('{{ row[0] }}')"><i class="fas fa-edit"></i></a>
+                            </div>
+                        </div>
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

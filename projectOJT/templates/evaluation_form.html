@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Evaluation Form</title>
+    <style>
+        /* Your existing CSS styles here */
+
+        /* Adjustments for the form */
+        form {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e1e1e1;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 1px solid #e1e1e1;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Your table styles here */
+
+        button[type="submit"] {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .dropbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+    </style>
+
+
+</head>
+<body>
+    <nav>
+        <ul>    
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-bars"></i></button>
+                <div class="dropdown-content">           
+                    <a href="/dashboard"><b>Dashboard</b></a>
+                    <a href="/dashboard/positions"><b>Employee Management</b></a>
+                    <a href="/dashboard/departments"><b>Department Management</b></a>
+                    <a href="/dashboard/questionnaires"><b>Behavioral Competency</b></a>
+                    <a href="/dashboard/performance_evaluation"><b>Performance Evaluation</b></a>
+                    <a href="/results"><b>Results</b></a>
+                    <a href="/logout"><b>Logout</b></a>
+                </div>
+            </div>
+        </ul>
+    </nav>
+            
+    <h1>Evaluation Form</h1>
+    <div class="form-container">
+        <form action="/submit_evaluation" method="post">
+            <div class="input-container">
+                <label class="your-name-label" for="evaluator_name">Your Name:</label>
+                <input type="text" id="evaluator_name" name="evaluator_name" class="your-name-input" required>
+            </div>
+
+    
+    
+            <div class="input-container">
+                <label class="employee-label" for="evaluated_name">Employee Being Evaluated:</label>
+                <input type="text" id="evaluated_name" name="evaluated_name" class="employee-input" required>
+            </div>
+
+            <div class="question-container">
+                <h2>Teamwork</h2>  
+                <label for="task1">1. Consistently works with others to accomplish goals and tasks:</label>
+                <input type="number" id="task1" name="q1" min="0" max="5" required><br><br>
+
+                <label for="task2">2. Treats all employee's in a respectful courteous manner:</label>
+                <input type="number" id="task2" name="q2" min="0" max="5" required><br><br>
+
+
+            
+        
+
+                <label for="task3">3. Actively participates in activities and assigned tasks as required:</label>
+                <input type="number" id="task3" name="q3" min="0" max="5" required><br><br>
+                
+                <!-- Continue with Questions 4 to 22 -->
+                
+                <!-- Question 4 -->
+                <label for="task4">4. Willingness to work with co-worker to improve department collaboration on a continuous basis:</label>
+                <input type="number" id="task4" name="q4" min="0" max="5" required><br><br>
+                
+                <!-- Continue with Questions 5 to 22 -->
+                
+                <!-- Question 5 -->
+                <label for="task5">5. Considers the feedback and views of co-employees when completing an assigned task:</label>
+                <input type="number" id="task5" name="q5" min="0" max="5" required><br><br>
+                
+                <!-- Competency Category: Communication -->
+                <h2>Communication</h2>
+                
+                <!-- Question 6 -->
+                <label for="task6">6. Actively listens to supervisor/manager and/or co-workers:</label>
+                <input type="number" id="task6" name="q6" min="0" max="5" required><br><br>
+                
+                <!-- Question 7 -->
+                <label for="task7">7. Comprehends written and oral information:</label>
+                <input type="number" id="task7" name="q7" min="0" max="5" required><br><br>
+                
+                <!-- Continue with Questions 8 to 22 -->
+                
+                <!-- Question 8 -->
+                <label for="task8">8. Consistently delivers accurate information both written and orally:</label>
+                <input type="number" id="task8" name="q8" min="0" max="5" required><br><br>
+                
+                <!-- Continue with Questions 9 to 22 -->
+                
+                <!-- Question 9 -->
+                <label for="task9">9. Reliably provides feedback as required, both internally and externally:</label>
+                <input type="number" id="task9" name="q9" min="0" max="5" required><br><br>
+                
+                <!-- Continue with Questions 10 to 22 -->
+                
+                <!-- Question 10 -->
+                <label for="task10">10. Able to communicate well with internal and external customers:</label>
+                <input type="number" id="task10" name="q10" min="0" max="5" required><br><br>
+                
+                <!-- Competency Category: Attendance & Punctuality -->
+                <h2>Attendance & Punctuality</h2>
+                
+                <!-- Question 11 -->
+                <label for="task11">11. Is punctual on a regular basis:</label>
+                <input type="number" id="task11" name="q11" min="0" max="5" required><br><br>
+                
+                <!-- Question 12 -->
+                <label for="task12">12. Maintains good attendance:</label>
+                <input type="number" id="task12" name="q12" min="0" max="5" required><br><br>
+                
+                <!-- Continue with Questions 13 to 22 -->
+                
+                <!-- Question 13 -->
+                <label for="task13">13. Informs supervisor in a timely manner when absenteeism and lateness may occur:</label>
+                <input type="number" id="task13" name="q13" min="0" max="5" required><br><br>
+                
+                <!-- Competency Category: Productivity/Resilience -->
+                <h2>Productivity/Resilience</h2>
+                
+                <!-- Question 14 -->
+                <label for="task14">14. Consistently delivers quality results:</label>
+                <input type="number" id="task14" name="q14" min="0" max="5" required><br><br>
+                
+                <!-- Question 15 -->
+                <label for="task15">15. Ability to meet deadlines and manages time well:</label>
+                <input type="number" id="task15" name="q15" min="0" max="5" required><br><br>
+                
+                <!-- Question 16 -->
+                <label for="task16">16. Ability to multitask:</label>
+                <input type="number" id="task16" name="q16" min="0" max="5" required><br><br>
+                
+                <!-- Question 17 -->
+                <label for="task17">17. Ability to work around problems and obstacles in a stressful situation in order to achieve the required task:</label>
+                <input type="number" id="task17" name="q17" min="0" max="5" required><br><br>
+                
+                <!-- Question 18 -->
+                <label for="task18">18. Time management is effective and efficient:</label>
+                <input type="number" id="task18" name="q18" min="0" max="5" required><br><br>
+                
+                <!-- Question 19 -->
+                <label for="task19">19. Efficiently informs supervisor/manager of any challenges or barriers relevant to a given task or assignment:</label>
+                <input type="number" id="task19" name="q19" min="0" max="5" required><br><br>
+                
+                <!-- Competency Category: Initiative/Proactivity -->
+                <h2>Initiative/Proactivity</h2>
+                
+                <!-- Question 20 -->
+                <label for="task20">20. Ability to complete assignments without the need for prompting from supervisors/managers and/or others:</label>
+                <input type="number" id="task20" name="q20" min="0" max="5" required><br><br>
+                
+                <!-- Question 21 -->
+                <label for="task21">21. Successfully completes tasks independently and consistently:</label>
+                <input type="number" id="task21" name="q21" min="0" max="5" required><br><br>
+                
+                <!-- Question 22 -->
+                <label for="task22">22. Seeks additional support when necessary:</label>
+                <input type="number" id="task22" name="q22" min="0" max="5" required><br><br>
+                
+        
+                <!-- Question 23 -->
+            <div class="question">
+                <label for="task23">23. Recognizes and takes appropriate action to effectively address problems and opportunities:</label>
+                <input type="number" id="task23" name="q23" min="1" max="4" required>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question">
+                <label for="task24">24. Engages in continuous learning and improvement:</label>
+                <input type="number" id="task24" name="q24" min="1" max="4" required>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question">
+                <label for="task25">25. Contributes new ideas and always seeks ways to improve the department/organization:</label>
+                <input type="number" id="task25" name="q25" min="1" max="4" required>
+            </div>
+
+            <!-- Question 26 -->
+            <h2>Judgment/Decision Making</h2>
+            <div class="question">
+                <label for="task26">26. Analyzes problems effectively:</label>
+                <input type="number" id="task26" name="q26" min="1" max="4" required>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question">
+                <label for="task27">27. Demonstrates the ability to make creative and effective solutions to problems:</label>
+                <input type="number" id="task27" name="q27" min="1" max="4" required>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question">
+                <label for="task28">28. Demonstrates good judgment in handling routine problems:</label>
+                <input type="number" id="task28" name="q28" min="1" max="4" required>
+            </div>
+
+            <h2>Dependability/Reliability</h2>
+            <!-- Question 29 -->
+            <div class="question">
+                <label for="task29">29. Ability to follow through and meet required deadlines:</label>
+                <input type="number" id="task29" name="q29" min="1" max="4" required>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question">
+                <label for="task30">30. Is personally accountable for his/her actions:</label>
+                <input type="number" id="task30" name="q30" min="1" max="4" required>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question">
+                <label for="task31">31. Adapts effectively to changes in the work environment:</label>
+                <input type="number" id="task31" name="q31" min="1" max="4" required>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question">
+                <label for="task32">32. Displays a consistent level of high performance:</label>
+                <input type="number" id="task32" name="q32" min="1" max="4" required>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question">
+                <label for="task33">33. Is honest in all his/her dealings:</label>
+                <input type="number" id="task33" name="q33" min="1" max="4" required>
+            </div>
+            <h2>Attitude</h2>
+            <!-- Question 34 -->
+            <div class="question">
+                <label for="task34">34. Offers assistance willingly:</label>
+                <input type="number" id="task34" name="q34" min="1" max="4" required>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question">
+                <label for="task35">35. Makes a positive contribution to morale:</label>
+                <input type="number" id="task35" name="q35" min="1" max="4" required>
+            </div>
+                
+                <!-- Question 36 (Attitude) -->
+        <div class="question">
+            <label for="task36">36. Shows sensitivity to and consideration for others' feelings:</label>
+            <input type="number" id="task36" name="q36" min="1" max="4" required>
+        </div>
+
+        <!-- Question 37 (Attitude) -->
+        <div class="question">
+            <label for="task37">37. Accepts constructive criticism positively:</label>
+            <input type="number" id="task37" name="q37" min="1" max="4" required>
+        </div>
+
+        <!-- Question 38 (Attitude) -->
+        <div class="question">
+            <label for="task38">38. Shows pride in work:</label>
+            <input type="number" id="task38" name="q38" min="1" max="4" required>
+        </div>
+
+        <!-- Competency Category: Professionalism -->
+        <h2>Professionalism</h2>
+        <div class="question">
+            <label for="task39">39. Respects those in authority:</label>
+            <input type="number" id="task39" name="q39" min="1" max="4" required>
+        </div>
+
+        <!-- Question 40 (Professionalism) -->
+        <div class="question">
+            <label for="task40">40. Behaves in a professional manner:</label>
+            <input type="number" id="task40" name="q40" min="1" max="4" required>
+        </div>
+
+        <!-- Question 41 (Professionalism) -->
+        <div class="question">
+            <label for="task41">41. Wise in the choice of words when communicating (respectful, courteous, does not use profane language, etc.):</label>
+            <input type="number" id="task41" name="q41" min="1" max="4" required>
+        </div>
+
+        <!-- Question 42 (Professionalism) -->
+        <div class="question">
+            <label for="task42">42. Follows all policies and procedures when issues and conflicts may arise:</label>
+            <input type="number" id="task42" name="q42" min="1" max="4" required>
+        </div>
+
+        <!-- Question 43 (Professionalism) -->
+        <div class="question">
+            <label for="task43">43. Follows all policies and procedures when issues and conflicts may arise:</label>
+            <input type="number" id="task43" name="q43" min="1" max="4" required>
+        </div>
+
+        <!-- Question 44 (Professionalism) -->
+        <div class="question">
+            <label for="task44">44.Physical and appearance is conducive with the work environment:</label>
+            <input type="number" id="task44" name="q44" min="1" max="4" required>
+        </div>
+
+        <div class="question">
+            <label for="task45">45.Uses all tools, equipment and machines responsibly:</label>
+            <input type="number" id="task45" name="q45" min="1" max="4" required>
+        </div>
+
+                <button type="submit">Submit Evaluation</button>
+            </form>
+        </body>
+        </html>

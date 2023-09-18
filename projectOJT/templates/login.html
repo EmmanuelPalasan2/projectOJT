@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome!</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+    
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .loading {
+				background: #094CFA;
+				width: 60px;
+				height: 60px;
+				margin: auto;
+				border-radius: 4px;
+				/* Here we declare our inline animation */
+				animation: rotate 3s linear infinite;
+			}
+
+        .background-container {
+            background: url('https://scontent.fcgm1-1.fa.fbcdn.net/v/t39.30808-6/300835354_463691752438456_4277678984244845831_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGXvUDae10AIR9iwHb_TDmd2_O8W2O0aZvb87xbY7Rpm0Z3P004F1Voz6NXjganNBymnZOMoLq1lAwC_pdDf7dx&_nc_ohc=Iyv4NVld37YAX_KEfrE&_nc_ht=scontent.fcgm1-1.fna&oh=00_AfA_SEHSkDx08IhumkvV28IrTj5GB1oZxiuT8dMyUNylxg&oe=64ED8969') no-repeat center center fixed;
+            background-size: 100% 130%; /* Fit the background image to the container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            
+        }
+
+        .icon-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .icon-label i {
+            font-size: 20px;
+            margin-right: 10px;
+            width: 30px; /* Adjust as needed */
+            text-align: center;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+            border: 2px solid transparent;
+            position: relative;
+            margin: 0 auto;
+        
+            
+        }
+
+        .login-container::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        border-radius: 12px;
+        border: 6px solid rgba(0, 123, 255, 0.2); /* Adjust the color and transparency */
+        opacity: 0;
+        pointer-events: none;
+        animation: glowing-border 2s infinite alternate;
+        }
+
+        @keyframes glowing-border {
+        0% {
+            opacity: 0.4;
+            transform: scale(1);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+        }
+        100% {
+            opacity: 0.8;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+        }
+         }
+
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+				from {
+					transform: rotate(0deg);
+				}
+
+				to {
+					transform: rotate(359deg);
+				}
+			}
+
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            margin: 10px 0;
+            background-color: #f2f2f2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            text-align: center; /* Center the text within input fields */
+        }
+
+        form input a[type="submit"] {
+            width:75%; /* Adjust width as needed */
+            padding: 3px;
+            background-color: #eed090;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 500px;
+            margin-left: 50px;
+            
+
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input a[type="text"],
+        input a[type="password"] {
+            width: 100%;
+            padding: 12px; /* Increased padding for a more comfortable look */
+            border: none;
+            border-radius: 8px; /* Rounded corners */
+            margin: 10px 0; /* Adjust margin as needed */
+            background-color: #f2f2f2; /* Background color for the input fields */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+            transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+           
+        }
+
+        input a[type="text"]:focus,
+        input a[type="password"]:focus {
+            background-color: #ffffff; /* Change background color on focus */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Adjust shadow on focus */
+        }
+
+        input a[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        input a[type="submit"]:active {
+            background-color: #003080; /* Adjust active background color as needed */
+            transform: scale(0.95); /* Add click zoom effect */
+        }
+
+        input a[type="submit"]:active::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.3); /* Adjust ripple color and transparency */
+            border-radius: 50%;
+            animation: ripple 0.6s ease-out;
+            transform-origin: center;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        input a[type="submit"]:focus {
+            animation: pulse 1.5s infinite; /* Apply pulse animation on button focus */
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        input a[type="submit"]::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        border-radius: 5px;
+        border: 2px solid transparent;
+        opacity: 0;
+        pointer-events: none;
+        animation: glowing-border 2s infinite alternate;
+        }
+
+        @keyframes glowing-border {
+        0% {
+            opacity: 0.4;
+            transform: scale(1);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+        }
+        100% {
+            opacity: 0.8;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+        }
+         }
+
+        input a[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .error-message {
+            color: #ff0000;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .submit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.submit-button:active {
+    background-color: #003080;
+    transform: scale(0.95);
+}
+
+.submit-button:active::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: ripple 0.6s ease-out;
+    transform-origin: center;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.submit-button::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    opacity: 0;
+    pointer-events: none;
+    animation: glowing-border 2s infinite alternate;
+}
+
+@keyframes glowing-border {
+    0% {
+        opacity: 0.4;
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+    }
+    100% {
+        opacity: 0.8;
+        transform: scale(1.02);
+        box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+    }
+}
+
+    .submit-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .submit-button:focus {
+        animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <div class="login-container">
+            <div class="loading"></div>
+            <h1><i class="fas fa-sign-in-alt"></i> LOGIN</h1>
+            {% if error %}
+            <p class="error-message">{{ error }}</p>
+            {% endif %}
+            <form method="POST" action="/">
+                <div class="form-group">
+                    <label for="username" class="icon-label"><i class="fas fa-user">Username</i></label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="icon-label"><i class="fas fa-lock">Password</i></label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="submit-button">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

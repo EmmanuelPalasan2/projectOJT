@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 40px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e1e1e1;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            position: relative; 
+        }
+
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 21px;
+            border: 2px solid transparent;
+            opacity: 0;
+            pointer-events: none;
+            animation: glowing-border 2s infinite alternate;
+        }
+        
+        
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+            }
+        }
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+            }
+        }
+
+        .dashboard-container:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Adjust box shadow as desired */
+            transform: translateY(-5px);
+            }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-section h2 {
+            color: #333;
+            font-size: 24px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .flipping-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .flipping-text span {
+            position: relative;
+            display: inline-block;
+            font-size: 35px;
+            color: #000000;
+            text-transform: uppercase;
+            animation: flipAnimation 2s infinite;
+            animation-delay: calc(.2s * var(--i));
+        }
+
+        @keyframes flipAnimation {
+            0%, 80% {
+                transform: rotateY(360deg);
+            }
+        }
+
+
+        .dropbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        /* Center the image and add some padding */
+        img {
+            display: block;
+            margin: 0 auto;
+            padding: 20px 0;
+            max-width: 100%;
+            height: auto;
+        }
+
+    </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const glowColors = ["#007bff", "#00cc99", "#ff9900"]; // Add your desired colors here
+                const dashboardContainer = document.querySelector(".dashboard-container");
+
+                function setRandomGlowColor() {
+                    const randomIndex = Math.floor(Math.random() * glowColors.length);
+                    const randomColor = glowColors[randomIndex];
+                    dashboardContainer.style.setProperty("--glow-color", randomColor);
+                }
+
+                setRandomGlowColor(); // Set a random color initially
+
+                dashboardContainer.addEventListener("animationiteration", setRandomGlowColor);
+            });
+        </script>
+
+</head>
+<body>
+    <nav>
+        <ul>    
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-bars"></i></button>
+                <div class="dropdown-content">           
+                    <a href="/dashboard"><b>Dashboard</b></a>
+                    <a href="/dashboard/positions"><b>Employee Management</b></a>
+                    <a href="/dashboard/departments"><b>Department Management</b></a>
+                    <a href="/dashboard/questionnaires"><b>Behavioral Competency</b></a>
+                    <a href="/dashboard/performance_evaluation"><b>Performance Evaluation</b></a>
+                    <a href="/results"><b>Results</b></a>
+                    <a href="/logout"><b>Logout</b></a>
+                </div>
+            </div>
+        </ul>
+    </nav>
+
+    <div class="dashboard-container">
+        <h1 class="flipping-text">
+            <span style="--i: 1">W</span>
+            <span style="--i: 2">e</span>
+            <span style="--i: 3">l</span>
+            <span style="--i: 4">c</span>
+            <span style="--i: 5">o</span>
+            <span style="--i: 6">m</span>
+            <span style="--i: 7">e</span>
+            <span style="--i: 8">&nbsp;</span>
+            <span style="--i: 9">t</span>
+            <span style="--i: 10">o</span>
+            <span style="--i: 11">&nbsp;</span>
+            <span style="--i: 12">E</span>
+            <span style="--i: 13">m</span>
+            <span style="--i: 14">p</span>
+            <span style="--i: 15">l</span>
+            <span style="--i: 16">o</span>
+            <span style="--i: 17">y</span>
+            <span style="--i: 18">e</span>
+            <span style="--i: 19">e</span>
+            <span style="--i: 20">&nbsp;</span>
+            <span style="--i: 21">e</span>
+            <span style="--i: 22">v</span>
+            <span style="--i: 22">a</span>
+            <span style="--i: 23">l</span>
+            <span style="--i: 24">u</span>
+            <span style="--i: 25">a</span>
+            <span style="--i: 26">t</span>
+            <span style="--i: 27">i</span>
+            <span style="--i: 28">o</span>
+            <span style="--i: 29">n</span>
+            <span style="--i: 30">&nbsp;</span>
+            <span style="--i: 31">s</span>
+            <span style="--i: 32">y</span>
+            <span style="--i: 33">s</span>
+            <span style="--i: 34">t</span>
+            <span style="--i: 35">e</span>
+            <span style="--i: 36">m</span>
+        </h1>
+        <div class="dashboard-section">
+            <h2>RBJ Comtrex</h2>
+            <!-- Add your table content here -->
+        </div>
+        <img src="static/rbj-building.png" alt="Dashboard Background">
+    </div>
+
+</body>
+</html>

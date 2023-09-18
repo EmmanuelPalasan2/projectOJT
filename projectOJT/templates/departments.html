@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Departments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 40px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e1e1e1;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            position: relative;
+        }
+
+        
+        .dashboard-container::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            border-radius: 21px;
+            border: 2px solid transparent;
+            opacity: 0;
+            pointer-events: none;
+            animation: glowing-border 2s infinite alternate;
+        }
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
+            }
+        }
+        
+        .dashboard-container:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 8px 20px rgba(179, 170, 170, 0.2);
+         }
+
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-section h2 {
+            color: #333;
+            font-size: 24px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+
+        :root {
+            --glow-colors: #007bff, #00cc99, #ff9900; /* Add your desired colors here */
+        }
+
+        @keyframes glowing-border {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+                box-shadow: 0 0 10px var(--glow-color);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scale(1.02);
+                box-shadow: 0 0 20px var(--glow-color);
+            }
+        }
+
+        .dropbtn {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        /* Styling for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border: 1px solid #e1e1e1;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:hover {
+            background-color: #500000;
+            animation: glow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% {
+                background-color: rgba(255, 0, 0, 0.1); /* Red glowing color */
+            }
+            100% {
+                background-color: #f2f2f2;
+            }
+        }
+
+
+        /* Styling for list within the table */
+         ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+            line-height: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        ul li i {
+            margin-right: 5px;
+            color: #007bff;
+        }
+
+        /* Styling for the dashboard container on hover */
+        .dashboard-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(179, 170, 170, 0.2);
+            animation: floatUp 0.3s ease-in-out, glowing 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+
+        .dog-animation {
+        position: fixed;
+        top: 0;
+        left: -150px;
+        animation: run 5s linear infinite;
+        
+        }
+
+        @keyframes run {
+        0% {
+            transform: translateX(-150px) scaleX(1);
+        }
+        50% {
+            transform: translateX(calc(100vw + 150px)) scaleX(-1);
+        }
+        100% {
+            transform: translateX(-150px) scaleX(1);
+        }
+         }
+
+        
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const glowColors = ["#007bff", "#00cc99", "#ff9900"]; // Add your desired colors here
+            const dashboardContainer = document.querySelector(".dashboard-container");
+
+            function setRandomGlowColor() {
+                const randomIndex = Math.floor(Math.random() * glowColors.length);
+                const randomColor = glowColors[randomIndex];
+                dashboardContainer.style.setProperty("--glow-color", randomColor);
+            }
+
+            setRandomGlowColor(); // Set a random color initially
+
+            dashboardContainer.addEventListener("animationiteration", setRandomGlowColor);
+        });
+    </script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-bars"></i></button>
+                <div class="dropdown-content">  
+                    <a href="/dashboard"><b>Dashboard</b></a>
+                    <a href="/dashboard/positions"><b>Employee Management</b></a>
+                    <a href="/dashboard/departments"><b>Department Management</b></a>
+                    <a href="/dashboard/questionnaires"><b>Behavioral Competency</b></a>
+                    <a href="/dashboard/performance_evaluation"><b>Performance Evaluation</b></a>
+                    <a href="/results"><b>Results</b></a>
+                    <a href="/logout"><b>Logout</b></a>
+                </div>
+            </div>
+        </ul>
+    </nav>
+
+    <div class="dashboard-container">
+        <h1>DEPARTMENTS</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Department ID</th>
+                    <th>Department Name</th>
+                    <th>Employees</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for department in departments %}
+                <tr onclick="togglePopup(this)">
+                    <td>{{ department['DepartmentID'] }}</td>
+                    <td>{{ department['DepartmentName'] }}</td>
+                    <td>
+                        <ul>
+                            {% for employee in department['employees'] %}
+                            <li><i class="fas fa-user"></i> {{ employee[1] }} - {{ employee[2] }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr class="popup-content">
+                    <td colspan="3">
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
